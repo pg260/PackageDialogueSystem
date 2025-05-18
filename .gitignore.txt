@@ -1,0 +1,52 @@
+# --------------------------------------
+# Unity Generated Files and Directories
+# --------------------------------------
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Mm]emoryCaptures/
+/[Uu]ser[Ss]ettings/
+
+# --------------------------------------
+# Arquivos de Projeto e IDE
+# --------------------------------------
+*.csproj
+*.sln
+*.suo
+*.userprefs
+*.vscode
+
+# --------------------------------------
+# Arquivos Temporários e de Sistema
+# --------------------------------------
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# --------------------------------------
+# Pacotes do Unity (não necessário para pacotes UPM)
+# --------------------------------------
+/[Pp]ackages/
+
+# --------------------------------------
+# Arquivos de Cache do UPM
+# --------------------------------------
+/.nuget/
+npm-debug.log
+
+# --------------------------------------
+# Assets pesados (opcional, se não forem parte do pacote)
+# --------------------------------------
+*.png
+*.jpg
+*.psd
+*.fbx
+*.wav
+*.mp3
+*.mp4
