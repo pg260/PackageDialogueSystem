@@ -2,7 +2,7 @@
   "name": "com.pg.dialoguesystem",
   "displayName": "Dialogue System",
   "version": "1.1.0",
-  "unity": "6000.0.34f1",
+  "unity": "6000.0",
   "description": "Sistema de diálogo com suporte a localização.",
   "dependencies": {
     "com.unity.localization": "1.5.4"
