@@ -47,7 +47,7 @@ namespace Runtime.DialogueSystem.Runtime.Data.Nodes
         public string DefaultNextNodeId;
 
         [Tooltip("Conditions for branching nodes")]
-        public List<DialogueBranchCondition> BranchConditions;
+        public List<DialogueBranchCondition> BranchConditions = new();
 
         [Header("Choices")]
         [Tooltip("Available choices for this node")]
@@ -59,5 +59,10 @@ namespace Runtime.DialogueSystem.Runtime.Data.Nodes
 
         [Tooltip("Triggered when node is exited")]
         public UnityEvent OnNodeExit;
+        
+        #region Graph
+        [HideInInspector]
+        public Vector2 Position = new Vector2(0, 0);
+        #endregion
     }
 }

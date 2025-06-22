@@ -13,6 +13,72 @@ MonoBehaviour:
   m_Name: DialogueContainerExemple
   m_EditorClassIdentifier: 
   Nodes:
+  - NodeId: 7d6dec70-4f33-4379-a223-76499fdda624
+    NodeType: 1
+    LocalizedText:
+      m_TableReference:
+        m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+      m_TableEntryReference:
+        m_KeyId: 50906841088
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    UsePlural: 0
+    PluralQuantity: 1
+    SpeakerNameKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SpeakerIcon: {fileID: 0}
+    ListenerIcon: {fileID: 0}
+    ShowSpeakerIcon: 1
+    ShowListenerIcon: 1
+    DefaultNextNodeId: 
+    BranchConditions: []
+    Choices:
+    - ChoiceLocalizationKey:
+        m_TableReference:
+          m_TableCollectionName: GUID:bf197150c19508a4db4903d9e2647188
+        m_TableEntryReference:
+          m_KeyId: 9861382144
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      TargetNodeId: 93a8e65d-46ab-44d6-b86e-ff521f69c007
+      IsExitChoice: 0
+      OnSelect:
+        m_PersistentCalls:
+          m_Calls: []
+      RequiredConditions: []
+    - ChoiceLocalizationKey:
+        m_TableReference:
+          m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+        m_TableEntryReference:
+          m_KeyId: 50906841088
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      TargetNodeId: 26ddb83f-ebce-4735-bfd9-82a6e0516872
+      IsExitChoice: 0
+      OnSelect:
+        m_PersistentCalls:
+          m_Calls: []
+      RequiredConditions: []
+    OnNodeEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    OnNodeExit:
+      m_PersistentCalls:
+        m_Calls: []
+    Position: {x: 187, y: 0}
   - NodeId: 0
     NodeType: 0
     LocalizedText:
@@ -39,6 +105,42 @@ MonoBehaviour:
     ListenerIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     ShowSpeakerIcon: 1
     ShowListenerIcon: 1
+    DefaultNextNodeId: 7d6dec70-4f33-4379-a223-76499fdda624
+    BranchConditions: []
+    Choices: []
+    OnNodeEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    OnNodeExit:
+      m_PersistentCalls:
+        m_Calls: []
+    Position: {x: 0, y: 0}
+  - NodeId: 93a8e65d-46ab-44d6-b86e-ff521f69c007
+    NodeType: 0
+    LocalizedText:
+      m_TableReference:
+        m_TableCollectionName: GUID:bf197150c19508a4db4903d9e2647188
+      m_TableEntryReference:
+        m_KeyId: 9861382144
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    UsePlural: 0
+    PluralQuantity: 1
+    SpeakerNameKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SpeakerIcon: {fileID: 0}
+    ListenerIcon: {fileID: 0}
+    ShowSpeakerIcon: 1
+    ShowListenerIcon: 1
     DefaultNextNodeId: 
     BranchConditions: []
     Choices: []
@@ -48,6 +150,43 @@ MonoBehaviour:
     OnNodeExit:
       m_PersistentCalls:
         m_Calls: []
+    Position: {x: 417, y: -38}
+  - NodeId: 26ddb83f-ebce-4735-bfd9-82a6e0516872
+    NodeType: 0
+    LocalizedText:
+      m_TableReference:
+        m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+      m_TableEntryReference:
+        m_KeyId: 50906841088
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    UsePlural: 0
+    PluralQuantity: 1
+    SpeakerNameKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SpeakerIcon: {fileID: 0}
+    ListenerIcon: {fileID: 0}
+    ShowSpeakerIcon: 1
+    ShowListenerIcon: 1
+    DefaultNextNodeId: 
+    BranchConditions: []
+    Choices: []
+    OnNodeEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    OnNodeExit:
+      m_PersistentCalls:
+        m_Calls: []
+    Position: {x: 417, y: 77}
   references:
     version: 2
     RefIds: []

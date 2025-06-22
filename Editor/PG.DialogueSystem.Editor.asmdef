@@ -1,7 +1,7 @@
 {
     "name": "PG.DialogueSystem.Editor",
     "rootNamespace": "Editor",
-    "references": [],
+    "references": ["GUID:9af00b55824743fb899a09e221b8fae0"],
     "includePlatforms": [
         "Editor"
     ],

@@ -81,7 +81,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
         public async void StartDialogue(DialogueContainer dialogue)
         {
             _currentDialogue = dialogue;
-            _currentNode = _currentDialogue.FindNode("0");
+            _currentNode = _currentDialogue.Nodes[0];//pegando o primeiro nó pelo index da lista
         
             await _dialogueUI.SetVisibilityAsync(true);
             OnDialogueStart?.Invoke();
@@ -164,12 +164,13 @@ namespace Runtime.DialogueSystem.Runtime.Core
             }
 
             _isTyping = false;
+            OnTypingCompleted();
         }
     
         /// <summary>
         /// Finaliza o diálogo atual e esconde a UI.
         /// </summary>
-        public void EndDialogue()
+        public async void EndDialogue()
         {
             _currentNode?.OnNodeExit?.Invoke();
 
@@ -178,8 +179,10 @@ namespace Runtime.DialogueSystem.Runtime.Core
                 StopCoroutine(_typingCoroutine);
                 _typingCoroutine = null;
             }
+            
+            _dialogueUI.ClearChoices();
 
-            _dialogueUI.SetVisibilityAsync(false);
+            await _dialogueUI.SetVisibilityAsync(false);
             OnDialogueEnd?.Invoke();
 
             _currentDialogue = null;
@@ -245,20 +248,19 @@ namespace Runtime.DialogueSystem.Runtime.Core
         private void ProcessNode(DialogueNode node)
         {
             _currentNode = node;
+            _dialogueUI.ClearChoices(); 
 
             _dialogueUI.UpdateSpeakerIcons(
                 node.ShowSpeakerIcon ? node.SpeakerIcon : null,
                 node.ShowListenerIcon ? node.ListenerIcon : null);
 
-            // Textos localizados
             string text = node.UsePlural
                 ? LocalizationManager.Instance.GetPlural(node.LocalizedText, node.PluralQuantity)
                 : LocalizationManager.Instance.GetLocalizedString(node.LocalizedText);
-
-            // Inicia digitação
+            
+            if (_typingCoroutine != null) StopCoroutine(_typingCoroutine);
             _typingCoroutine = StartCoroutine(TypeTextRoutine(text));
-            _isTyping = true;
-
+    
             node.OnNodeEnter?.Invoke();
         }
 
@@ -267,6 +269,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
         /// </summary>
         private IEnumerator TypeTextRoutine(string text)
         {
+            _isTyping = true;
             _dialogueUI.SetText(string.Empty);
             foreach (char c in text)
             {
@@ -274,6 +277,22 @@ namespace Runtime.DialogueSystem.Runtime.Core
                 yield return new WaitForSecondsRealtime(_textSpeed);
             }
             _isTyping = false;
+            OnTypingCompleted();
+        }
+        
+        /// <summary>
+        /// Chamado quando a digitação termina (naturalmente ou por skip).
+        /// Verifica se o nó atual é de escolha e instancia os botões.
+        /// </summary>
+        private async void OnTypingCompleted()
+        {
+            _isTyping = false;
+            _typingCoroutine = null;
+            
+            if (_currentNode.NodeType == EDialogueType.Choice)
+            {
+                await _dialogueUI.DisplayChoicesAsync(_currentNode.Choices);
+            }
         }
     
         #endregion

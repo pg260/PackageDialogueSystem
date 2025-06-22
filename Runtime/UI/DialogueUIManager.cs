@@ -43,7 +43,7 @@ namespace Runtime.DialogueSystem.Runtime.UI
             }
             else
             {
-                await FadeCanvasAsync(0, 1);
+                await FadeCanvasAsync(1, 0);
                 gameObject.SetActive(false);
             }
         }
@@ -117,6 +117,27 @@ namespace Runtime.DialogueSystem.Runtime.UI
             _choicesLayout.enabled = false;
             _choicesLayout.enabled = true;
         }
+        
+        /// <summary>
+        /// Limpa as escolhas antigas e cria novos botões para as escolhas fornecidas.
+        /// </summary>
+        /// <param name="choices">A lista de escolhas a serem exibidas.</param>
+        public async Task DisplayChoicesAsync(List<DialogueChoice> choices)
+        {
+            ClearChoices();
+
+            if (choices == null || choices.Count == 0) return;
+
+            var buttonCreationTasks = new List<Task>();
+            foreach (var choice in choices)
+            {
+                // Adiciona a tarefa de criação de cada botão a uma lista
+                buttonCreationTasks.Add(CreateChoiceButtonAsync(choice));
+            }
+    
+            // Espera que todos os botões sejam criados e seus textos localizados de forma concorrente
+            await Task.WhenAll(buttonCreationTasks);
+        }
 
         /// <summary>
         /// Atualiza textos dos botões de escolha quando o idioma muda.
@@ -146,7 +167,10 @@ namespace Runtime.DialogueSystem.Runtime.UI
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+            
             group.alpha = end;
+            group.interactable = group.alpha > 0;
+            group.blocksRaycasts = group.interactable;
         }
     
         /// <summary>
