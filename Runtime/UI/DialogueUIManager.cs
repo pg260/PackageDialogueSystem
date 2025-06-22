@@ -70,7 +70,7 @@ namespace Runtime.DialogueSystem.Runtime.UI
         public void SetText(string text)
         {
             _dialogueText.text = text;
-            _dialogueText.maxVisibleCharacters = 0;
+            _dialogueText.maxVisibleCharacters = text.Length;
         }
 
         /// <summary>

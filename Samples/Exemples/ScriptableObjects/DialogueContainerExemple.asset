@@ -54,8 +54,7 @@ MonoBehaviour:
       TargetNodeId: 93a8e65d-46ab-44d6-b86e-ff521f69c007
       IsExitChoice: 0
       OnSelect:
-        m_PersistentCalls:
-          m_Calls: []
+      - asdasdas
       RequiredConditions: []
     - ChoiceLocalizationKey:
         m_TableReference:
@@ -69,15 +68,11 @@ MonoBehaviour:
       TargetNodeId: 26ddb83f-ebce-4735-bfd9-82a6e0516872
       IsExitChoice: 0
       OnSelect:
-        m_PersistentCalls:
-          m_Calls: []
+      - asdasdasd
       RequiredConditions: []
     OnNodeEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    OnNodeExit:
-      m_PersistentCalls:
-        m_Calls: []
+    - asdasdasd
+    OnNodeExit: []
     Position: {x: 187, y: 0}
   - NodeId: 0
     NodeType: 0
@@ -109,11 +104,9 @@ MonoBehaviour:
     BranchConditions: []
     Choices: []
     OnNodeEnter:
-      m_PersistentCalls:
-        m_Calls: []
+    - aaaaa
     OnNodeExit:
-      m_PersistentCalls:
-        m_Calls: []
+    - 
     Position: {x: 0, y: 0}
   - NodeId: 93a8e65d-46ab-44d6-b86e-ff521f69c007
     NodeType: 0
@@ -145,11 +138,8 @@ MonoBehaviour:
     BranchConditions: []
     Choices: []
     OnNodeEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    OnNodeExit:
-      m_PersistentCalls:
-        m_Calls: []
+    - aaaaaaa
+    OnNodeExit: []
     Position: {x: 417, y: -38}
   - NodeId: 26ddb83f-ebce-4735-bfd9-82a6e0516872
     NodeType: 0
@@ -181,11 +171,8 @@ MonoBehaviour:
     BranchConditions: []
     Choices: []
     OnNodeEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    OnNodeExit:
-      m_PersistentCalls:
-        m_Calls: []
+    - asdasdasda
+    OnNodeExit: []
     Position: {x: 417, y: 77}
   references:
     version: 2

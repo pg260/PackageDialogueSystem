@@ -6,3 +6,8 @@
 ### Graph View Update
 - Add Graph Editor.
 - Bug fix  
+
+## [1.2.0] - 2025-06-22
+### Add Dialogue events
+- Add Dialogue events
+- Bug fix  

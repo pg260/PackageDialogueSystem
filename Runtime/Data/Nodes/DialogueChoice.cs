@@ -10,7 +10,7 @@ namespace Runtime.DialogueSystem.Runtime.Data.Nodes
         public LocalizedString ChoiceLocalizationKey;
         public string TargetNodeId;
         public bool IsExitChoice;
-        public UnityEvent OnSelect;
+        public List<string> OnSelect;
         public List<DialogueCondition> RequiredConditions;
     }
 }

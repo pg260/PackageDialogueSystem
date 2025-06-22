@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Runtime.DialogueSystem.Runtime.Data.Containers;
 using Runtime.DialogueSystem.Runtime.Data.Enums;
@@ -34,6 +35,8 @@ namespace Runtime.DialogueSystem.Runtime.Core
         private Coroutine _typingCoroutine;
     
         private readonly List<Task> _assetLoadingTasks = new();
+        
+        private List<DialogueEvent> _eventListeners;
 
         public UnityEvent OnDialogueStart;
         public UnityEvent OnDialogueEnd;
@@ -126,7 +129,10 @@ namespace Runtime.DialogueSystem.Runtime.Core
                 return;
             }
 
-            choice.OnSelect?.Invoke();
+            foreach (var events in choice.OnSelect)
+            {
+                DialogueEvent.SendSignal(events);
+            }
 
             if (choice.IsExitChoice)
             {
@@ -172,7 +178,10 @@ namespace Runtime.DialogueSystem.Runtime.Core
         /// </summary>
         public async void EndDialogue()
         {
-            _currentNode?.OnNodeExit?.Invoke();
+            foreach (var events in _currentNode.OnNodeExit)
+            {
+                DialogueEvent.SendSignal(events);
+            }
 
             if (_typingCoroutine != null)
             {
@@ -234,6 +243,12 @@ namespace Runtime.DialogueSystem.Runtime.Core
     
         #region Internal Logic
     
+        private void FindAndRegisterListeners()
+        {
+            _eventListeners = new List<DialogueEvent>();
+            _eventListeners = FindObjectsByType<DialogueEvent>(FindObjectsSortMode.None).ToList();
+        }
+        
         /// <summary>
         /// Reprocessa o nó atual ao mudar idioma.
         /// </summary>
@@ -247,6 +262,11 @@ namespace Runtime.DialogueSystem.Runtime.Core
         /// </summary>
         private void ProcessNode(DialogueNode node)
         {
+            foreach (var events in _currentNode.OnNodeExit)
+            {
+                DialogueEvent.SendSignal(events);
+            }
+            
             _currentNode = node;
             _dialogueUI.ClearChoices(); 
 
@@ -260,8 +280,11 @@ namespace Runtime.DialogueSystem.Runtime.Core
             
             if (_typingCoroutine != null) StopCoroutine(_typingCoroutine);
             _typingCoroutine = StartCoroutine(TypeTextRoutine(text));
-    
-            node.OnNodeEnter?.Invoke();
+
+            foreach (var events in node.OnNodeEnter)
+            {
+                DialogueEvent.SendSignal(events);
+            }
         }
 
         /// <summary>

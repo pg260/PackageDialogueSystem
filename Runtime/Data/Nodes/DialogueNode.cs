@@ -55,10 +55,10 @@ namespace Runtime.DialogueSystem.Runtime.Data.Nodes
 
         [Header("Events")]
         [Tooltip("Triggered when node becomes active")]
-        public UnityEvent OnNodeEnter;
+        public List<string> OnNodeEnter;
 
         [Tooltip("Triggered when node is exited")]
-        public UnityEvent OnNodeExit;
+        public List<string> OnNodeExit;
         
         #region Graph
         [HideInInspector]
