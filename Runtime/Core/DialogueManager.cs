@@ -262,9 +262,12 @@ namespace Runtime.DialogueSystem.Runtime.Core
         /// </summary>
         private void ProcessNode(DialogueNode node)
         {
-            foreach (var events in _currentNode.OnNodeExit)
+            if (node != _currentNode)
             {
-                DialogueEvent.SendSignal(events);
+                foreach (var events in _currentNode.OnNodeExit)
+                {
+                    DialogueEvent.SendSignal(events);
+                }   
             }
             
             _currentNode = node;
