@@ -271,7 +271,18 @@ namespace Runtime.DialogueSystem.Runtime.Core
             }
             
             _currentNode = node;
-            _dialogueUI.ClearChoices(); 
+            _dialogueUI.ClearChoices();
+
+            if (_currentNode.NodeType == EDialogueType.Event)
+            {
+                foreach (var events in node.OnNodeEnter)
+                {
+                    DialogueEvent.SendSignal(events);
+                }
+                
+                AdvanceDialogue();
+                return;
+            }
 
             _dialogueUI.UpdateSpeakerIcons(
                 node.ShowSpeakerIcon ? node.SpeakerIcon : null,

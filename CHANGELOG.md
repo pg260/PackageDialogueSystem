@@ -23,3 +23,10 @@
 ### Bug Fix
 
 * End Node Event Fix
+
+## \[1.2.2] - 2025-08-13
+
+### Bug Fix
+
+* Remove Characters icon animation
+* Fix Dialogue Event Node
