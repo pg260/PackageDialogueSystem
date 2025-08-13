@@ -85,7 +85,13 @@ namespace Runtime.DialogueSystem.Runtime.Core
         {
             _currentDialogue = dialogue;
             _currentNode = _currentDialogue.Nodes[0];//pegando o primeiro nó pelo index da lista
-        
+
+            var node = _currentNode;
+            _dialogueUI.UpdateSpeakerIcons(
+                node.ShowSpeakerIcon ? node.SpeakerIcon : null,
+                node.ShowListenerIcon ? node.ListenerIcon : null,
+                LocalizationManager.Instance.GetLocalizedString(node.SpeakerNameKey));
+            
             await _dialogueUI.SetVisibilityAsync(true);
             OnDialogueStart?.Invoke();
 

@@ -36,3 +36,9 @@
 ### Add Speaker Name
 
 * Add speaker name on dialogue box
+
+## \[1.2.4] - 2025-08-13
+
+### Character image fix
+
+* Bug fix in Character image

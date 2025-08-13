@@ -54,6 +54,16 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// </summary>
         public void UpdateSpeakerIcons(Sprite speaker, Sprite listener, string speakerName)
         {
+            if (_speakerIcon.color.a <= 1)
+            {
+                _speakerIcon.color = new Color(1, 1, 1, 1);
+            }
+
+            if (_listenerIcon.color.a <= 1)
+            {
+                _listenerIcon.color = new Color(1, 1, 1, 1);
+            }
+            
             SpeakerName.text = speakerName;
             _speakerIcon.sprite = speaker;
             _speakerIcon.gameObject.SetActive(speaker != null);
