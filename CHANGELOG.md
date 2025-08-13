@@ -42,3 +42,9 @@
 ### Character image fix
 
 * Bug fix in Character image
+
+## \[1.2.5] - 2025-08-13
+
+### Update to new Dialogue UI
+
+* Update to new Dialogue UI

@@ -91,8 +91,8 @@ namespace Runtime.DialogueSystem.Runtime.Core
                 node.ShowSpeakerIcon ? node.SpeakerIcon : null,
                 node.ShowListenerIcon ? node.ListenerIcon : null,
                 LocalizationManager.Instance.GetLocalizedString(node.SpeakerNameKey));
-            
-            await _dialogueUI.SetVisibilityAsync(true);
+
+            await _dialogueUI.ChangeDialogueType(_currentNode);
             OnDialogueStart?.Invoke();
 
             ProcessNode(_currentNode);
@@ -127,7 +127,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
         /// Seleciona uma escolha em um nó de diálogo do tipo Choice.
         /// </summary>
         /// <param name="choice">Escolha selecionada.</param>
-        public void SelectChoice(DialogueChoice choice)
+        public async void SelectChoice(DialogueChoice choice)
         {
             if (_isTyping)
             {
@@ -197,7 +197,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
             
             _dialogueUI.ClearChoices();
 
-            await _dialogueUI.SetVisibilityAsync(false);
+            await _dialogueUI.EndDialogue();
             OnDialogueEnd?.Invoke();
 
             _currentDialogue = null;
@@ -266,7 +266,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
         /// <summary>
         /// Processa a exibição de um nó.
         /// </summary>
-        private void ProcessNode(DialogueNode node)
+        private async void ProcessNode(DialogueNode node)
         {
             if (node != _currentNode)
             {
@@ -289,11 +289,13 @@ namespace Runtime.DialogueSystem.Runtime.Core
                 AdvanceDialogue();
                 return;
             }
-
+            
             _dialogueUI.UpdateSpeakerIcons(
                 node.ShowSpeakerIcon ? node.SpeakerIcon : null,
                 node.ShowListenerIcon ? node.ListenerIcon : null,
                 LocalizationManager.Instance.GetLocalizedString(node.SpeakerNameKey));
+
+            await _dialogueUI.ChangeDialogueType(_currentNode);
 
             string text = node.UsePlural
                 ? LocalizationManager.Instance.GetPlural(node.LocalizedText, node.PluralQuantity)
@@ -335,7 +337,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
             
             if (_currentNode.NodeType == EDialogueType.Choice)
             {
-                await _dialogueUI.DisplayChoicesAsync(_currentNode.Choices);
+                await _dialogueUI.DisplayChoicesAsync(_currentNode);
             }
         }
     

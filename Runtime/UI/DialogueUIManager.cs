@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Runtime.DialogueSystem.Runtime.Core;
+using Runtime.DialogueSystem.Runtime.Data.Enums;
 using Runtime.DialogueSystem.Runtime.Data.Nodes;
 using TMPro;
 using UnityEngine;
@@ -15,10 +16,16 @@ namespace Runtime.DialogueSystem.Runtime.UI
     public class DialogueUIManager : MonoBehaviour
     {
         [Header("UI References")]
-        [SerializeField] private TextMeshProUGUI SpeakerName;
         [SerializeField] private Image _speakerIcon;
         [SerializeField] private Image _listenerIcon;
-        [SerializeField] private TMP_Text _dialogueText;
+
+        [Header("DialoguePanel")]
+        [SerializeField] private TextMeshProUGUI SpeakerName;
+        [SerializeField] private TextMeshProUGUI _dialogueText;
+        
+        [Header("ChoicePanel")] 
+        [SerializeField] private CanvasGroup choiceCanvasGroup;
+        [SerializeField] private TextMeshProUGUI choiceText;
         [SerializeField] private Transform _choicesContainer;
         [SerializeField] private Button _choiceButtonPrefab;
 
@@ -26,6 +33,9 @@ namespace Runtime.DialogueSystem.Runtime.UI
         [SerializeField] private float _fadeDuration = 0.3f;
         [SerializeField] private CanvasGroup _mainCanvasGroup;
 
+        private CanvasGroup _currentCanvasGroup;
+        private TextMeshProUGUI currentDialogueText;
+        
         private List<Button> _currentChoices = new();
         private LayoutGroup _choicesLayout;
     
@@ -35,18 +45,41 @@ namespace Runtime.DialogueSystem.Runtime.UI
             LocalizationManager.OnLanguageChanged += RefreshChoiceButtonsAsync;
         }
 
-        public async Task SetVisibilityAsync(bool isVisible)
+        public Task ChangeDialogueType(DialogueNode node)
         {
-            if (isVisible)
+            var tcs = new TaskCompletionSource<bool>();
+            
+            if (_currentCanvasGroup != choiceCanvasGroup && node.NodeType == EDialogueType.Choice)
             {
-                gameObject.SetActive(true);
-                await FadeCanvasAsync(0, 1);
+                currentDialogueText = choiceText;
+                _currentCanvasGroup = choiceCanvasGroup;
+                currentDialogueText.text = "";
+                
+                StartCoroutine(AnimateUI(_mainCanvasGroup, 1, 0));
+                StartCoroutine(RunCoroutineWrapper(AnimateUI(choiceCanvasGroup, 0, 1), tcs));
+            }
+            else if (_currentCanvasGroup != _mainCanvasGroup && node.NodeType == EDialogueType.Message)
+            {
+                currentDialogueText = _dialogueText;
+                _currentCanvasGroup = _mainCanvasGroup;
+                currentDialogueText.text = "";
+                
+                StartCoroutine(RunCoroutineWrapper(AnimateUI(_mainCanvasGroup, 0, 1), tcs));
+                StartCoroutine(AnimateUI(choiceCanvasGroup, 1, 0));
             }
             else
             {
-                await FadeCanvasAsync(1, 0);
-                gameObject.SetActive(false);
+                tcs.SetResult(true);
             }
+            
+            return tcs.Task;
+        }
+
+        public async Task EndDialogue()
+        {
+            StartCoroutine(RemoveIcon(_speakerIcon));
+            StartCoroutine(RemoveIcon(_listenerIcon));
+            await FadeCanvasAsync(1, 0, _currentCanvasGroup);   
         }
 
         /// <summary>
@@ -54,13 +87,15 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// </summary>
         public void UpdateSpeakerIcons(Sprite speaker, Sprite listener, string speakerName)
         {
-            if (_speakerIcon.color.a <= 1)
+            if (_speakerIcon.color.a < 1)
             {
+                StartCoroutine(AnimateIcon(_speakerIcon));
                 _speakerIcon.color = new Color(1, 1, 1, 1);
             }
 
-            if (_listenerIcon.color.a <= 1)
+            if (_listenerIcon.color.a < 1)
             {
+                StartCoroutine(AnimateIcon(_listenerIcon));
                 _listenerIcon.color = new Color(1, 1, 1, 1);
             }
             
@@ -70,10 +105,6 @@ namespace Runtime.DialogueSystem.Runtime.UI
 
             _listenerIcon.sprite = listener;
             _listenerIcon.gameObject.SetActive(listener != null);
-
-            // Anima os ícones
-            // StartCoroutine(AnimateIcon(_speakerIcon));
-            // StartCoroutine(AnimateIcon(_listenerIcon));
         }
 
         /// <summary>
@@ -81,8 +112,8 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// </summary>
         public void SetText(string text)
         {
-            _dialogueText.text = text;
-            _dialogueText.maxVisibleCharacters = text.Length;
+            currentDialogueText.text = text;
+            currentDialogueText.maxVisibleCharacters = text.Length;
         }
 
         /// <summary>
@@ -90,8 +121,8 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// </summary>
         public void AppendText(string character)
         {
-            _dialogueText.maxVisibleCharacters++;
-            _dialogueText.text += character;
+            currentDialogueText.maxVisibleCharacters++;
+            currentDialogueText.text += character;
         }
 
         /// <summary>
@@ -134,12 +165,13 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// Limpa as escolhas antigas e cria novos botões para as escolhas fornecidas.
         /// </summary>
         /// <param name="choices">A lista de escolhas a serem exibidas.</param>
-        public async Task DisplayChoicesAsync(List<DialogueChoice> choices)
+        public async Task DisplayChoicesAsync(DialogueNode currentNode)
         {
             ClearChoices();
-
+            
+            var choices = currentNode.Choices;
             if (choices == null || choices.Count == 0) return;
-
+            
             var buttonCreationTasks = new List<Task>();
             foreach (var choice in choices)
             {
@@ -171,6 +203,8 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// </summary>
         private IEnumerator AnimateUI(CanvasGroup group, float start, float end)
         {
+            if(group.alpha == end) yield break;
+            
             var elapsed = 0f;
             group.alpha = start;
             while (elapsed < _fadeDuration)
@@ -188,10 +222,10 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// <summary>
         /// Wrapper que retorna uma Task para animações baseadas em coroutine.
         /// </summary>
-        private Task FadeCanvasAsync(float start, float end)
+        private Task FadeCanvasAsync(float start, float end, CanvasGroup group)
         {
             var tcs = new TaskCompletionSource<bool>();
-            StartCoroutine(RunCoroutineWrapper(AnimateUI(_mainCanvasGroup, start, end), tcs));
+            StartCoroutine(RunCoroutineWrapper(AnimateUI(group, start, end), tcs));
             return tcs.Task;
         }
     
@@ -199,12 +233,6 @@ namespace Runtime.DialogueSystem.Runtime.UI
         {
             yield return StartCoroutine(coroutine);
             tcs.SetResult(true);
-        }
-
-        // Atualização no método SetVisibility
-        public async void SetVisibility(bool isVisible)
-        {
-            await SetVisibilityAsync(isVisible);
         }
 
         /// <summary>
@@ -224,6 +252,25 @@ namespace Runtime.DialogueSystem.Runtime.UI
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+            icon.transform.localScale = original;
+        }
+
+        private IEnumerator RemoveIcon(Image icon)
+        {
+            icon.color = Color.white;
+        
+            var original = icon.transform.localScale;
+            float elapsed = 0f;
+            const float duration = 0.2f;
+            while (elapsed < duration)
+            {
+                icon.transform.localScale = Vector3.Lerp(original, Vector3.zero, elapsed / duration);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            
+            icon.transform.localScale = Vector3.zero;
+            icon.color = Color.clear;
             icon.transform.localScale = original;
         }
 

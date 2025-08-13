@@ -83,7 +83,7 @@ MonoBehaviour:
         m_FallbackState: 0
         m_WaitForCompletion: 0
         m_LocalVariables: []
-      TargetNodeId: 
+      TargetNodeId: 14d31c6c-ef2f-4d87-84f0-b037f4c01a6a
       IsExitChoice: 0
       OnSelect: []
       RequiredConditions: []
@@ -97,12 +97,44 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       TargetNodeId: 
-      IsExitChoice: 0
+      IsExitChoice: 1
       OnSelect: []
       RequiredConditions: []
     OnNodeEnter: []
     OnNodeExit: []
-    Position: {x: 482, y: 219}
+    Position: {x: 482, y: 218}
+  - NodeId: 14d31c6c-ef2f-4d87-84f0-b037f4c01a6a
+    NodeType: 0
+    LocalizedText:
+      m_TableReference:
+        m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+      m_TableEntryReference:
+        m_KeyId: 50906841088
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    UsePlural: 0
+    PluralQuantity: 1
+    SpeakerNameKey:
+      m_TableReference:
+        m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+      m_TableEntryReference:
+        m_KeyId: 50906841088
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SpeakerIcon: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    ListenerIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    ShowSpeakerIcon: 1
+    ShowListenerIcon: 1
+    DefaultNextNodeId: 
+    BranchConditions: []
+    Choices: []
+    OnNodeEnter: []
+    OnNodeExit: []
+    Position: {x: 722, y: 218}
   references:
     version: 2
     RefIds: []
