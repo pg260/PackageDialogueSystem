@@ -15,6 +15,7 @@ namespace Runtime.DialogueSystem.Runtime.UI
     public class DialogueUIManager : MonoBehaviour
     {
         [Header("UI References")]
+        [SerializeField] private TextMeshProUGUI SpeakerName;
         [SerializeField] private Image _speakerIcon;
         [SerializeField] private Image _listenerIcon;
         [SerializeField] private TMP_Text _dialogueText;
@@ -51,8 +52,9 @@ namespace Runtime.DialogueSystem.Runtime.UI
         /// <summary>
         /// Define os sprites dos ícones de speaker e listener e aplica animação de entrada.
         /// </summary>
-        public void UpdateSpeakerIcons(Sprite speaker, Sprite listener)
+        public void UpdateSpeakerIcons(Sprite speaker, Sprite listener, string speakerName)
         {
+            SpeakerName.text = speakerName;
             _speakerIcon.sprite = speaker;
             _speakerIcon.gameObject.SetActive(speaker != null);
 
@@ -60,8 +62,8 @@ namespace Runtime.DialogueSystem.Runtime.UI
             _listenerIcon.gameObject.SetActive(listener != null);
 
             // Anima os ícones
-            StartCoroutine(AnimateIcon(_speakerIcon));
-            StartCoroutine(AnimateIcon(_listenerIcon));
+            // StartCoroutine(AnimateIcon(_speakerIcon));
+            // StartCoroutine(AnimateIcon(_listenerIcon));
         }
 
         /// <summary>

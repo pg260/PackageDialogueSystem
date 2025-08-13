@@ -286,7 +286,8 @@ namespace Runtime.DialogueSystem.Runtime.Core
 
             _dialogueUI.UpdateSpeakerIcons(
                 node.ShowSpeakerIcon ? node.SpeakerIcon : null,
-                node.ShowListenerIcon ? node.ListenerIcon : null);
+                node.ShowListenerIcon ? node.ListenerIcon : null,
+                LocalizationManager.Instance.GetLocalizedString(node.SpeakerNameKey));
 
             string text = node.UsePlural
                 ? LocalizationManager.Instance.GetPlural(node.LocalizedText, node.PluralQuantity)

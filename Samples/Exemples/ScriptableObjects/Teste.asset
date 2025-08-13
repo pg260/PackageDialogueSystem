@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e333d0463f7dc0d42a14702c17691fda, type: 3}
+  m_Name: Teste
+  m_EditorClassIdentifier: 
+  Nodes:
+  - NodeId: 98a3d647-9c7c-4769-9a88-f552bfe46411
+    NodeType: 0
+    LocalizedText:
+      m_TableReference:
+        m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+      m_TableEntryReference:
+        m_KeyId: 50906841088
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    UsePlural: 0
+    PluralQuantity: 1
+    SpeakerNameKey:
+      m_TableReference:
+        m_TableCollectionName: GUID:bf197150c19508a4db4903d9e2647188
+      m_TableEntryReference:
+        m_KeyId: 9861382144
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SpeakerIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+    ListenerIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    ShowSpeakerIcon: 1
+    ShowListenerIcon: 1
+    DefaultNextNodeId: a6cdb7be-78b8-4250-9aca-f74edea6d2f8
+    BranchConditions: []
+    Choices: []
+    OnNodeEnter: []
+    OnNodeExit: []
+    Position: {x: 221, y: 165}
+  - NodeId: a6cdb7be-78b8-4250-9aca-f74edea6d2f8
+    NodeType: 1
+    LocalizedText:
+      m_TableReference:
+        m_TableCollectionName: GUID:bf197150c19508a4db4903d9e2647188
+      m_TableEntryReference:
+        m_KeyId: 9861382144
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    UsePlural: 0
+    PluralQuantity: 1
+    SpeakerNameKey:
+      m_TableReference:
+        m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+      m_TableEntryReference:
+        m_KeyId: 50906841088
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SpeakerIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    ListenerIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+    ShowSpeakerIcon: 1
+    ShowListenerIcon: 1
+    DefaultNextNodeId: 
+    BranchConditions: []
+    Choices:
+    - ChoiceLocalizationKey:
+        m_TableReference:
+          m_TableCollectionName: GUID:bf197150c19508a4db4903d9e2647188
+        m_TableEntryReference:
+          m_KeyId: 9861382144
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      TargetNodeId: 
+      IsExitChoice: 0
+      OnSelect: []
+      RequiredConditions: []
+    - ChoiceLocalizationKey:
+        m_TableReference:
+          m_TableCollectionName: GUID:93ad69c2418b8c8499ec914bab20631b
+        m_TableEntryReference:
+          m_KeyId: 50906841088
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      TargetNodeId: 
+      IsExitChoice: 0
+      OnSelect: []
+      RequiredConditions: []
+    OnNodeEnter: []
+    OnNodeExit: []
+    Position: {x: 482, y: 219}
+  references:
+    version: 2
+    RefIds: []

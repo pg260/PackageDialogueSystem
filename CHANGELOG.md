@@ -26,7 +26,13 @@
 
 ## \[1.2.2] - 2025-08-13
 
-### Bug Fix
+### Node Event Update
 
 * Remove Characters icon animation
 * Fix Dialogue Event Node
+
+## \[1.2.3] - 2025-08-13
+
+### Add Speaker Name
+
+* Add speaker name on dialogue box
