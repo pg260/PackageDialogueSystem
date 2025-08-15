@@ -77,11 +77,11 @@ namespace Runtime.DialogueSystem.Runtime.UI
 
         public async Task EndDialogue()
         {
-            _currentCanvasGroup = null;
-            currentDialogueText = null;
             StartCoroutine(RemoveIcon(_speakerIcon));
             StartCoroutine(RemoveIcon(_listenerIcon));
             await FadeCanvasAsync(1, 0, _currentCanvasGroup);
+            _currentCanvasGroup = null;
+            currentDialogueText = null;
         }
 
         /// <summary>
