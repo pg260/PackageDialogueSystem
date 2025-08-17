@@ -6,6 +6,8 @@ using Runtime.DialogueSystem.Runtime.Data.Enums;
 using Runtime.DialogueSystem.Runtime.Data.Nodes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Runtime.DialogueSystem.Runtime.UI
@@ -22,6 +24,7 @@ namespace Runtime.DialogueSystem.Runtime.UI
         [Header("DialoguePanel")]
         [SerializeField] private TextMeshProUGUI SpeakerName;
         [SerializeField] private TextMeshProUGUI _dialogueText;
+        [SerializeField] private Button panelButton;
         
         [Header("ChoicePanel")] 
         [SerializeField] private CanvasGroup choiceCanvasGroup;
@@ -38,6 +41,9 @@ namespace Runtime.DialogueSystem.Runtime.UI
         
         private List<Button> _currentChoices = new();
         private LayoutGroup _choicesLayout;
+
+        public UnityEvent ChangeToDialogue;
+        public UnityEvent ChangeToChoices;
     
         private void Awake()
         {
@@ -57,6 +63,7 @@ namespace Runtime.DialogueSystem.Runtime.UI
                 
                 StartCoroutine(AnimateUI(_mainCanvasGroup, 1, 0));
                 StartCoroutine(RunCoroutineWrapper(AnimateUI(choiceCanvasGroup, 0, 1), tcs));
+                ChangeToChoices?.Invoke();
             }
             else if (_currentCanvasGroup != _mainCanvasGroup && node.NodeType == EDialogueType.Message)
             {
@@ -66,6 +73,8 @@ namespace Runtime.DialogueSystem.Runtime.UI
                 
                 StartCoroutine(RunCoroutineWrapper(AnimateUI(_mainCanvasGroup, 0, 1), tcs));
                 StartCoroutine(AnimateUI(choiceCanvasGroup, 1, 0));
+                EventSystem.current.SetSelectedGameObject(panelButton.gameObject);
+                ChangeToDialogue?.Invoke();
             }
             else
             {
@@ -148,6 +157,11 @@ namespace Runtime.DialogueSystem.Runtime.UI
             var button = Instantiate(_choiceButtonPrefab, _choicesContainer);
             _currentChoices.Add(button);
 
+            if (_currentChoices.Count == 1)
+            {
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+            }
+            
             var textComponent = button.GetComponentInChildren<TMP_Text>();
             textComponent.text = await LocalizationManager.Instance.GetLocalizedStringAsync(choice.ChoiceLocalizationKey);
 
