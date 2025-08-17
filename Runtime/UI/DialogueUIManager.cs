@@ -158,6 +158,11 @@ namespace Runtime.DialogueSystem.Runtime.UI
         {
             var button = Instantiate(_choiceButtonPrefab, _choicesContainer);
             _currentChoices.Add(button);
+
+            if (_currentChoices.Count >= 1)
+            {
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+            }
             
             var textComponent = button.GetComponentInChildren<TMP_Text>();
             textComponent.text = await LocalizationManager.Instance.GetLocalizedStringAsync(choice.ChoiceLocalizationKey);

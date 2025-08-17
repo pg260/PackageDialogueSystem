@@ -40,6 +40,9 @@ namespace Runtime.DialogueSystem.Runtime.Core
 
         public UnityEvent OnDialogueStart;
         public UnityEvent OnDialogueEnd;
+        
+        public UnityEvent onTyping;
+        public UnityEvent endTyping;
 
         #region Unity Callbacks
     
@@ -316,6 +319,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
         private IEnumerator TypeTextRoutine(string text)
         {
             _isTyping = true;
+            onTyping?.Invoke();
             _dialogueUI.SetText(string.Empty);
             foreach (char c in text)
             {
@@ -334,6 +338,7 @@ namespace Runtime.DialogueSystem.Runtime.Core
         {
             _isTyping = false;
             _typingCoroutine = null;
+            endTyping?.Invoke();
             
             if (_currentNode.NodeType == EDialogueType.Choice)
             {
