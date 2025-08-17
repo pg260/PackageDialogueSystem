@@ -31,6 +31,7 @@ namespace Runtime.DialogueSystem.Runtime.UI
         [SerializeField] private TextMeshProUGUI choiceText;
         [SerializeField] private Transform _choicesContainer;
         [SerializeField] private Button _choiceButtonPrefab;
+        [SerializeField] private Button choicePanelButton;
 
         [Header("Animation Settings")]
         [SerializeField] private float _fadeDuration = 0.3f;
@@ -63,6 +64,7 @@ namespace Runtime.DialogueSystem.Runtime.UI
                 
                 StartCoroutine(AnimateUI(_mainCanvasGroup, 1, 0));
                 StartCoroutine(RunCoroutineWrapper(AnimateUI(choiceCanvasGroup, 0, 1), tcs));
+                EventSystem.current.SetSelectedGameObject(choicePanelButton.gameObject);
                 ChangeToChoices?.Invoke();
             }
             else if (_currentCanvasGroup != _mainCanvasGroup && node.NodeType == EDialogueType.Message)
@@ -156,11 +158,6 @@ namespace Runtime.DialogueSystem.Runtime.UI
         {
             var button = Instantiate(_choiceButtonPrefab, _choicesContainer);
             _currentChoices.Add(button);
-
-            if (_currentChoices.Count == 1)
-            {
-                EventSystem.current.SetSelectedGameObject(button.gameObject);
-            }
             
             var textComponent = button.GetComponentInChildren<TMP_Text>();
             textComponent.text = await LocalizationManager.Instance.GetLocalizedStringAsync(choice.ChoiceLocalizationKey);
